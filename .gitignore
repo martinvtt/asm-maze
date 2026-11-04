@@ -1,0 +1,70 @@
+# Assembly Maze
+
+![Tests](https://github.com/martinvtt/asm-maze/actions/workflows/tests.yml/badge.svg)
+
+A playable terminal maze written entirely in x86-64 assembly (NASM, Intel syntax,
+Linux system calls). No C library, game engine or runtime dependencies.
+
+```text
+#####################
+#@    #       #    S#
+# ### # ##### # ### #
+#   #   #   #   #   #
+### ##### # ##### # #
+#   #     #       # #
+# ### ########### # #
+#     #       #   # #
+# ##### ##### # ### #
+#       #           #
+#####################
+Moves: 0
+>
+```
+
+## Run
+
+On Ubuntu / WSL running on an x86-64 computer:
+
+```bash
+sudo apt install nasm binutils make gdb
+git clone https://github.com/martinvtt/asm-maze.git
+cd asm-maze
+make run
+```
+
+Reach `S` with the player `@`. Walls are marked `#`.
+
+| Command | Action |
+| --- | --- |
+| Z | Up |
+| Q | Left |
+| S | Down |
+| D | Right |
+| R | Restart, including after winning |
+| X | Quit |
+
+Type one command and press Enter. Lowercase and uppercase both work. Ctrl+D on an
+empty line also quits.
+
+## Features
+
+- One fixed, solvable 21-by-11 maze
+- Wall and bounds checks, victory detection, move counter, restart
+- Bounded input, EOF handling, interrupted syscall retries
+- Debug symbols and a non-executable stack
+
+## Development
+
+```bash
+make           # Assemble and link into build/maze
+make debug     # Start GDB at the first instruction
+make test      # Run the tests (requires Python 3)
+make clean     # Remove generated files
+```
+
+The tests run the real executable, including two complete games solved by a
+breadth-first search on the rendered maze.
+
+## License
+
+MIT
